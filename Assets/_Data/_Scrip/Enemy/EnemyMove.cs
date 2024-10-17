@@ -8,7 +8,7 @@ public class EnemyMove : EnemyAbstract
     [SerializeField] protected PathCtrl pathCtrl;
     [SerializeField] protected int currnetPointIndex;
     [SerializeField] protected Vector3 currentPoint;
-    [SerializeField] protected float pointDistance;
+    [SerializeField] protected float pointDistance = Mathf.Infinity;
     [SerializeField] protected float pointDistanceMin = 1;
     [SerializeField] protected bool isFinish;
     private void Start()

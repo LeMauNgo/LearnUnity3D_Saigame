@@ -21,6 +21,7 @@ public class TowerRada : MyBehaviour
         if (this._collider != null) return;
         this._collider = transform.GetComponent<SphereCollider>();
         this._collider.radius = 20;
+        this._collider.isTrigger = true;
         Debug.LogWarning(gameObject.name + "Load Collider", gameObject);
     }
     protected virtual void LoadRigidbody()
@@ -71,5 +72,9 @@ public class TowerRada : MyBehaviour
             enemyMinDistance = enemyDistance;
             this.nearest = enemy;
         }
+    }
+    public virtual EnemyCtrl GetEnemy()
+    {
+        return this.nearest;
     }
 }

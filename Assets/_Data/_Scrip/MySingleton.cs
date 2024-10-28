@@ -26,7 +26,7 @@ public class MySingleton<T> : MyBehaviour where T : MyBehaviour
         if (_instance == null)
         {
             _instance = this as T;
-            if (transform.parent == null) DontDestroyOnLoad(gameObject);
+            if (transform.parent == null) //DontDestroyOnLoad(gameObject);
             return;
         }
 

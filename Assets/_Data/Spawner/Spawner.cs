@@ -23,16 +23,16 @@ public abstract class Spawner<T> : MyBehaviour where T : PoolObj
 
     public virtual T Spawn(T prefab, Vector3 postion)
     {
-        T newBullet = this.Spawn(prefab);
-        newBullet.transform.position = postion;
-        return newBullet;
+        T newObject = this.Spawn(prefab);
+        newObject.transform.position = postion;
+        return newObject;
     }
 
     public virtual T Spawn(T prefab, Vector3 postion, Quaternion rotation)
     {
-        T newBullet = this.Spawn(prefab, postion);
-        newBullet.transform.rotation = rotation;
-        return newBullet;
+        T newObject = this.Spawn(prefab, postion);
+        newObject.transform.rotation = rotation;
+        return newObject;
     }
 
     public virtual void Despawn(T obj)

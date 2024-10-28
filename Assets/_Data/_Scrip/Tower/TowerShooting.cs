@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TowerShooting : TowerAbstract
 {
+    [SerializeField] protected EffectCtrl bullet;
     [SerializeField] protected EnemyCtrl target;
     [SerializeField] protected float timer;
     [SerializeField] protected int delay = 1;
@@ -45,7 +46,8 @@ public class TowerShooting : TowerAbstract
         if (this.target == null) return;
         this.timer += Time.deltaTime;
         if (this.timer < this.delay) return;
-        EffectSpawner.Instance.SpawnBullet(this.GetFirePoint().transform.position, this.GetFirePoint().transform.rotation);
+        EffectCtrl bulletPbs = EffectSpawnerCtrl.Instance.Spawner.Spawn(this.bullet, this.bullet.transform.position, this.firePoints[0].transform.rotation);
         this.timer = 0;
+        bulletPbs.gameObject.SetActive(true);
     }
 }

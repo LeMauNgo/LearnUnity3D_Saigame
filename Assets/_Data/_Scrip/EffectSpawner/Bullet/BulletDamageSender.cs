@@ -14,5 +14,8 @@ public class BulletDamageSender : DamageSender
         this.sphereCollider.radius = 0.5f;
         Debug.Log(transform.name + ": LoadTriggerCollider", gameObject);
     }
-
+    protected override DamageReceiver SendDamage(Collider collider)
+    {
+        return base.SendDamage(collider);
+    }
 }

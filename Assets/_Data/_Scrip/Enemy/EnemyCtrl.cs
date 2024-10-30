@@ -9,11 +9,14 @@ public abstract class EnemyCtrl : PoolObj
     public NavMeshAgent Agent => agent;
     [SerializeField] protected Animator animator;
     public Animator Animator => animator;
+    [SerializeField] protected EnemyDamageReceiver damageReceiver;
+    public EnemyDamageReceiver EnemyDamageReceiver => damageReceiver;
     protected override void LoadComponent()
     {
         base.LoadComponent();
         this.LoadAgent();
         this.LoadAnimator();
+        this.LoadEnemyDamageReceiver();
     }
     void LoadAgent()
     {
@@ -25,6 +28,12 @@ public abstract class EnemyCtrl : PoolObj
     {
         if (animator != null) return;
         this.animator = GetComponentInChildren<Animator>();
+        Debug.Log("LoadAnimator", gameObject);
+    }
+    protected virtual void LoadEnemyDamageReceiver()
+    {
+        if (damageReceiver != null) return;
+        this.damageReceiver = GetComponentInChildren<EnemyDamageReceiver>();
         Debug.Log("LoadAnimator", gameObject);
     }
 }

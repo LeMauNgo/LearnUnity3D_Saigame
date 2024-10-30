@@ -5,10 +5,18 @@ using UnityEngine;
 public class EnemyDamageReceiver : DamageReceiver
 {
     [SerializeField] protected CapsuleCollider capsuleCollider;
+    [SerializeField] protected EnemyCtrl ctrl;
     protected override void LoadComponent()
     {
         base.LoadComponent();
         this.LoadCapsuleCollider();
+        this.LoadEnemyCtrl();
+    }
+    protected virtual void LoadEnemyCtrl()
+    {
+        if (this.ctrl != null) ;
+        this.ctrl = GetComponentInParent<EnemyCtrl>();
+        Debug.Log(gameObject.name + "LoadEnemyCtrl", gameObject);
     }
     protected virtual void LoadCapsuleCollider()
     {
@@ -21,7 +29,7 @@ public class EnemyDamageReceiver : DamageReceiver
     }
     protected override void OnDead()
     {
-        //throw new System.NotImplementedException();
+        this.ctrl.Despawn.DoDespawn();
     }
 
     protected override void OnHurt()

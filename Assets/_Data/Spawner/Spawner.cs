@@ -6,14 +6,26 @@ using UnityEngine.EventSystems;
 public abstract class Spawner<T> : MyBehaviour where T : PoolObj
 {
     [SerializeField] protected int spawnCount = 0;
+    [SerializeField] protected Transform holder;
     [SerializeField] protected List<T> inPoolObjs = new();
-
+    protected override void LoadComponent()
+    {
+        base.LoadComponent();
+        this.LoadHolder();
+    }
+    protected virtual void LoadHolder()
+    {
+        if (this.holder != null) return;
+        this.holder = transform.Find("Holder");
+        Debug.LogWarning(gameObject.name + "LoadHolder", gameObject);
+    }
     public virtual T Spawn(T prefab)
     {
         T newObject = this.GetObjFromPool(prefab);
         if (newObject == null)
         {
             newObject = Instantiate(prefab);
+            newObject.transform.parent = this.holder;
             this.spawnCount++;
             this.UpdateName(prefab.transform, newObject.transform);
         }

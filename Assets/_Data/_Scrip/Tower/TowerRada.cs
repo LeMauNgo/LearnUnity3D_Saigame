@@ -33,6 +33,7 @@ public class TowerRada : MyBehaviour
     }
     private void FixedUpdate()
     {
+        this.RemoveDeadEnemy();
         this.FindNearest();
     }
     private void OnTriggerEnter(Collider other)
@@ -76,5 +77,17 @@ public class TowerRada : MyBehaviour
     public virtual EnemyCtrl GetEnemy()
     {
         return this.nearest;
+    }
+    protected virtual void RemoveDeadEnemy()
+    {
+        foreach (EnemyCtrl enemyCtrl in this.enemies)
+        {
+            if (enemyCtrl.EnemyDamageReceiver.IsDead())
+            {
+                if (enemyCtrl == this.nearest) this.nearest = null;
+                this.enemies.Remove(enemyCtrl);
+                return;
+            }
+        }
     }
 }

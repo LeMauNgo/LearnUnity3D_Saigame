@@ -8,7 +8,14 @@ public abstract class DamageReceiver : MyBehaviour
     [SerializeField] protected bool isDead = false;
     [SerializeField] protected bool isImmotal = false;
 
-
+    private void OnEnable()
+    {
+        this.Rebone();
+    }
+    protected virtual void Rebone()
+    {
+        this.currentHP = this.maxHP;
+    }
     public virtual void Receive(int damage, DamageSender damageSender)
     {
         if (!this.isImmotal) this.currentHP -= damage;

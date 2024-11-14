@@ -11,6 +11,11 @@ public class EnemyMove : EnemyAbstract
     [SerializeField] protected float pointDistance = Mathf.Infinity;
     [SerializeField] protected float pointDistanceMin = 1;
     [SerializeField] protected bool isFinish;
+    [SerializeField] protected bool canMove;
+    private void OnEnable()
+    {
+        this.currnetPointIndex = 0;
+    }
     private void Start()
     {
         
@@ -33,7 +38,7 @@ public class EnemyMove : EnemyAbstract
     protected virtual void Moving()
     {
         this.MovingStatus();
-        if(isFinish)
+        if(isFinish || !canMove || this.IsDeath())
         {
             this.enemyCtrl.Agent.isStopped = true;
             return;
@@ -41,6 +46,10 @@ public class EnemyMove : EnemyAbstract
         this.currentPoint = this.pathCtrl.GetPoint(currnetPointIndex);
         this.GetNextPoint();
         this.enemyCtrl.Agent.SetDestination(currentPoint);
+    }
+    protected virtual bool IsDeath()
+    {
+        return this.enemyCtrl.EnemyDamageReceiver.IsDead();
     }
     protected virtual void GetNextPoint()
     {
@@ -51,6 +60,7 @@ public class EnemyMove : EnemyAbstract
     }
     protected virtual void MovingStatus()
     {
-        this.enemyCtrl.Animator.SetBool("IsMoving", !isFinish);
+        this.canMove = !this.enemyCtrl.Agent.isStopped;
+        this.enemyCtrl.Animator.SetBool("IsMoving", canMove);
     }
 }

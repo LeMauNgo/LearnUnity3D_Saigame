@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 [RequireComponent(typeof(CapsuleCollider))]
 public class EnemyDamageReceiver : DamageReceiver
 {
@@ -14,7 +15,7 @@ public class EnemyDamageReceiver : DamageReceiver
     }
     protected virtual void LoadEnemyCtrl()
     {
-        if (this.ctrl != null) ;
+        if (this.ctrl != null) return;
         this.ctrl = GetComponentInParent<EnemyCtrl>();
         Debug.Log(gameObject.name + "LoadEnemyCtrl", gameObject);
     }
@@ -25,13 +26,24 @@ public class EnemyDamageReceiver : DamageReceiver
         this.capsuleCollider.radius = 0.3f;
         this.capsuleCollider.height = 2;
         this.capsuleCollider.center = new Vector3(0, 1, 0);
+        this.capsuleCollider.isTrigger = true;
         Debug.LogWarning(gameObject.name + "LoadCapsuleCollider", gameObject);
     }
     protected override void OnDead()
     {
+        this.ctrl.Animator.SetBool("IsDeath", this.isDead);
+        this.capsuleCollider.enabled = false;
+        Invoke(nameof(DoDespawn), 5);
+    }
+    protected virtual void DoDespawn()
+    {
         this.ctrl.Despawn.DoDespawn();
     }
-
+    protected override void Rebone()
+    {
+        base.Rebone();
+        this.capsuleCollider.enabled = true;
+    }
     protected override void OnHurt()
     {
         //throw new System.NotImplementedException();

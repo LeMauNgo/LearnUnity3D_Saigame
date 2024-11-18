@@ -34,6 +34,9 @@ public class EnemyDamageReceiver : DamageReceiver
         this.ctrl.Animator.SetBool("IsDeath", this.isDead);
         this.capsuleCollider.enabled = false;
         Invoke(nameof(DoDespawn), 5);
+
+        InventoriesManager.Instance.AddItem(ItemCode.Gold, 1);
+        InventoriesManager.Instance.AddItem(ItemCode.PlayerExp, 1);
     }
     protected virtual void DoDespawn()
     {

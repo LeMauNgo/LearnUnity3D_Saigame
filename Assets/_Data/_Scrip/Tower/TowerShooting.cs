@@ -9,11 +9,15 @@ public class TowerShooting : TowerAbstract
     [SerializeField] protected float timer;
     [SerializeField] protected int delay = 1;
     [SerializeField] protected List<FirePoint> firePoints;
+    [SerializeField] protected int killCount;
+    public int KillCount => killCount;
+    [SerializeField] protected int totalKill;
     private void Update()
     {
         this.GetTarget();
         this.LookAtTarget();
         this.Shooting();
+        this.IsTargetDead();
     }
     protected override void LoadComponent()
     {
@@ -50,5 +54,22 @@ public class TowerShooting : TowerAbstract
         EffectCtrl prefabs = EffectSpawnerCtrl.Instance.Prefabs.GetByName(this.bulletName);
         EffectCtrl bulletPbs = EffectSpawnerCtrl.Instance.Spawner.Spawn(prefabs, GetFirePoint().transform.position, this.firePoints[0].transform.rotation);
         bulletPbs.gameObject.SetActive(true);
+    }
+
+    protected virtual bool IsTargetDead()
+    {
+        if (this.target == null) return true;
+        if (!this.target.EnemyDamageReceiver.IsDead()) return false;
+        this.killCount++;
+        this.totalKill++;
+        this.target = null;
+        return true;
+    }
+
+    public virtual bool DeductKillCount(int count)
+    {
+        if (this.killCount < count) return false;
+        this.killCount -= count;
+        return true;
     }
 }

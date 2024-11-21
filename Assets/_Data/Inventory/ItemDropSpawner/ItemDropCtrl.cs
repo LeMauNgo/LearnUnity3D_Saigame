@@ -10,11 +10,17 @@ public abstract class ItemDropCtrl : PoolObj
     [SerializeField] protected Rigidbody _rigidbody;
     public Rigidbody Rigidbody => _rigidbody;
     [SerializeField] protected int dropCount;
+    public int DropCount => dropCount;
     protected override void LoadComponent()
     {
         base.LoadComponent();
         this.LoadBoxCollider();
         this.LoadRigidbody();
+    }
+    public abstract ItemCode GetItemCode();
+    public override string GetName()
+    {
+        return this.GetItemCode().ToString();
     }
     protected virtual void LoadBoxCollider()
     {

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GoldCtrl : ItemDropCtrl
 {
-    public override string GetName()
+    public override ItemCode GetItemCode()
     {
-        return "Gold";
+        return ItemCode.Gold;
     }
 }

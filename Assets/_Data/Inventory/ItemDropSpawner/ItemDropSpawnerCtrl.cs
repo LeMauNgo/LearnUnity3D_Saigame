@@ -26,12 +26,19 @@ public class ItemDropSpawnerCtrl : MySingleton<ItemDropSpawnerCtrl>
         this.prefabs = GetComponentInChildren<ItemDropPrefabs>();
         Debug.LogWarning(gameObject.name + "LoadItemDropPrefabs", gameObject);
     }
-    public virtual ItemDropCtrl Spawn(ItemCode itemCode, Vector3 position, int dropCount)
+    public virtual ItemDropCtrl Drop(ItemCode itemCode, Vector3 position, int dropCount)
     {
         ItemDropCtrl prefabs = this.Prefabs.GetByName(itemCode.ToString());
         ItemDropCtrl itemDropCtrl = this.Spawner.Spawn(prefabs, position);
         itemDropCtrl.SetDropCount(dropCount);
         itemDropCtrl.gameObject.SetActive(true);
         return itemDropCtrl;
+    }
+    public virtual void DropMany(ItemCode itemCode, Vector3 dropPosition, int dropCount)
+    {
+        for(int i = 0; i < dropCount; i++)
+        {
+            this.Drop(itemCode, dropPosition, 1);
+        }
     }
 }

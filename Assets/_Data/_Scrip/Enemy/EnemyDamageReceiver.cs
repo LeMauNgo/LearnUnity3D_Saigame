@@ -35,8 +35,8 @@ public class EnemyDamageReceiver : DamageReceiver
         this.capsuleCollider.enabled = false;
         Invoke(nameof(DoDespawn), 5);
 
-        ItemDropSpawnerCtrl.Instance.Spawn(ItemCode.Gold, transform.position, 1);
-        //InventoriesManager.Instance.AddItem(ItemCode.Gold, 1);
+        ItemDropSpawnerCtrl.Instance.DropMany(ItemCode.Gold, transform.position, 10);
+        ItemDropSpawnerCtrl.Instance.DropMany(ItemCode.Wand, transform.position, 1);
         InventoriesManager.Instance.AddItem(ItemCode.PlayerExp, 1);
     }
     protected virtual void DoDespawn()

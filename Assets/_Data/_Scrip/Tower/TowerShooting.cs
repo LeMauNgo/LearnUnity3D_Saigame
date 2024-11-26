@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TowerShooting : TowerAbstract
 {
-    [SerializeField] protected string bulletName = "Bullet";
     [SerializeField] protected EnemyCtrl target;
     [SerializeField] protected float timer;
     [SerializeField] protected int delay = 1;
@@ -51,11 +50,28 @@ public class TowerShooting : TowerAbstract
         this.timer += Time.deltaTime;
         if (this.timer < this.delay) return;
         this.timer = 0;
-        EffectCtrl prefabs = EffectSpawnerCtrl.Instance.Prefabs.GetByName(this.bulletName);
-        EffectCtrl bulletPbs = EffectSpawnerCtrl.Instance.Spawner.Spawn(prefabs, GetFirePoint().transform.position, this.firePoints[0].transform.rotation);
+        
+        FirePoint firePoint = GetFirePoint();
+        this.SpawnProjectile(firePoint);
+        this.SpawnMuzzle(firePoint);
+        this.SpawnSFX(firePoint.transform.position);
+    }
+    protected virtual void SpawnProjectile(FirePoint firePoint)
+    {
+        EffectCtrl projectilePrefabs = EffectSpawnerCtrl.Instance.Prefabs.GetByName(EffectCode.Projectile_ElectricBall01_Green.ToString());
+        EffectCtrl bulletPbs = EffectSpawnerCtrl.Instance.Spawner.Spawn(projectilePrefabs, firePoint.transform.position, firePoint.transform.rotation);
         bulletPbs.gameObject.SetActive(true);
     }
-
+    protected virtual void SpawnMuzzle(FirePoint firePoint)
+    {
+        EffectCtrl MuzzlePrefabs = EffectSpawnerCtrl.Instance.Prefabs.GetByName(EffectCode.Muzzle_ElectricBall01_Green.ToString());
+        EffectCtrl Muzzle = EffectSpawnerCtrl.Instance.Spawner.Spawn(MuzzlePrefabs, firePoint.transform.position, firePoint.transform.rotation);
+        Muzzle.gameObject.SetActive(true);
+    }
+    protected virtual void SpawnSFX(Vector3 position)
+    {
+        SoundManager.Instance.CreateSfx(SoundName.LaserOneShoot, position);
+    }
     protected virtual bool IsTargetDead()
     {
         if (this.target == null) return true;

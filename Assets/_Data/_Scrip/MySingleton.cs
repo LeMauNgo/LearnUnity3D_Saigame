@@ -16,7 +16,7 @@ public class MySingleton<T> : MyBehaviour where T : MyBehaviour
         }
     }
 
-    private void Awake()
+    protected virtual void Awake()
     {
         this.LoadInstance();
     }

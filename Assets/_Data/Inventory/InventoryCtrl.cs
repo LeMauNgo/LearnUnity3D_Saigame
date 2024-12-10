@@ -19,7 +19,7 @@ public abstract class InventoryCtrl : MonoBehaviour
             return;
         }
 
-        itemExist.itemCount += item.itemCount;
+        itemExist.Add(item.itemCount);
     }
 
     public virtual bool RemoveItem(ItemInventory item)

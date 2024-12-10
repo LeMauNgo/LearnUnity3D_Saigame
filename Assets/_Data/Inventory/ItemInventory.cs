@@ -39,7 +39,7 @@ public class ItemInventory
 
     public virtual bool Add(int number)
     {
-        //TODO
+        this.itemCount += number;
         return true;
     }
 

@@ -15,8 +15,8 @@ public class PlayerCtrl : MyBehaviour
     [SerializeField] protected PlayerCrosshair crosshairPointer;
     public PlayerCrosshair CrosshairPointer => crosshairPointer;
 
-    [SerializeField] protected Rig aimingRig;
-    public Rig AimingRig => aimingRig;
+    //[SerializeField] protected Rig aimingRig;
+    //public Rig AimingRig => aimingRig;
 
     //[SerializeField] protected WeaponsManager weapons;
     //public WeaponsManager Weapons => weapons;
@@ -27,7 +27,7 @@ public class PlayerCtrl : MyBehaviour
         this.LoadThirdPersonCtrl();
         this.LoadThirdPersonCamera();
         this.LoadCrosshairPointer();
-        this.LoadAimingRig();
+        //this.LoadAimingRig();
         //this.LoadWeapons();
     }
 
@@ -38,12 +38,12 @@ public class PlayerCtrl : MyBehaviour
     //    Debug.Log(transform.name + ": LoadWeapons", gameObject);
     //}
 
-    protected virtual void LoadAimingRig()
-    {
-        if (this.aimingRig != null) return;
-        this.aimingRig = transform.Find("Model").Find("AimingRig").GetComponent<Rig>();
-        Debug.Log(transform.name + ": LoadAimingRig", gameObject);
-    }
+    //protected virtual void LoadAimingRig()
+    //{
+    //    if (this.aimingRig != null) return;
+    //    this.aimingRig = transform.Find("Model").Find("AimingRig").GetComponent<Rig>();
+    //    Debug.Log(transform.name + ": LoadAimingRig", gameObject);
+    //}
 
     protected virtual void LoadCrosshairPointer()
     {
